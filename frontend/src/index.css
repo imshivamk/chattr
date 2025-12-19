@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+.body{
+  background-color: #030712;
+}
+
+/* Enable `dark:` variant via a custom variant using the `.dark` class */
+@custom-variant dark (&:is(.dark *));
