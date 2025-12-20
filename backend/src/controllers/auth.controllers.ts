@@ -264,4 +264,8 @@
         }
     };
 
+    export const updateProfile = async () => {
+        
+    }
+
 
