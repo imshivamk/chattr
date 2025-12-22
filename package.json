@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "workspaces":["frontend", "backend"],
-  "private":"true",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "private": "true",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:backend": "npm run dev --workspace=backend",
@@ -14,5 +17,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
 }

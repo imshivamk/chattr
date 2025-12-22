@@ -1,12 +1,13 @@
 // App.tsx
 import { Route, Routes } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import ResetPasswordPage from "./pages/ResetPassword";
-import SignupPage from "./pages/SignupPage";
-import LoginPage from "./pages/LoginPage";
-import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import HomePage from "./pages/HomePage.tsx";
+import ResetPasswordPage from "./pages/ResetPassword.tsx";
+import SignupPage from "./pages/SignupPage.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage.tsx";
 import Navbar from "./components/Navbar";
-import VerifyEmailPage from "./pages/VerifyEmailPage";
+import VerifyEmailPage from "./pages/VerifyEmailPage.tsx";
+
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import DashboardPage from "./pages/DashboardPage";
@@ -14,8 +15,7 @@ import DashboardPage from "./pages/DashboardPage";
 const App = () => {
   return (
     <AuthProvider>
-      <div>
-        {/* Navbar reads auth state from context */}
+      <div className="MainContainer min-h-screen flex flex-col">
         <Navbar />
         <Routes>
           <Route path="/reset-password/:resetPasswordCode" element={<ResetPasswordPage />} />
