@@ -1,9 +1,7 @@
-import Test from '../components/Test'
 
 const HomePage = () => {
   return (
     <div>
-      <Test/>
     </div>  
   )
 }

@@ -3,7 +3,7 @@ import { ratelimit } from "../lib/upstash.js";
 import { IAuthRequest } from "../types/types.js";
 
 export const rateLimiter = async (req:IAuthRequest, res:Response, next:NextFunction) => {
-    const limitKey = req.userId;
+    const limitKey = req.userId ?? req.ip;
     const {success} = await ratelimit.limit(limitKey as string);
 
     if(!success){
@@ -12,4 +12,6 @@ export const rateLimiter = async (req:IAuthRequest, res:Response, next:NextFunct
             message: "Too many requests! try again later"
         })
     }
+
+    return next();
 }

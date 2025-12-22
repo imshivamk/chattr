@@ -7,7 +7,7 @@ import path from "path"
 import { connectDb } from "./lib/db.js"
 import authRoutes from "./routes/auth.routes.js"
 import userRoutes from "./routes/user.routes.js"
-import messageRoutes from "./routes/message.routes.js"
+import chatRoutes from "./routes/chat.routes.js"
 dotenv.config()
 
 const app = express();
@@ -27,7 +27,7 @@ app.use(express.json({
 // routes
 app.use('/api/v1/auth',authRoutes);
 app.use('/api/v1/user', userRoutes);
-app.use('/api/v1/messages', messageRoutes);
+app.use('/api/v1/chat', chatRoutes);
 
 // start server
 const startServer = async () => {

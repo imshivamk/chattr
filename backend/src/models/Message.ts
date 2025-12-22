@@ -17,9 +17,11 @@ export default mongoose.model(
             type: String,
             trim: true,
             maxlength: 2000,
-            image: {
-                type: String
-            }
-        }
+
+        },
+        image: {
+            type: String
+        },
+
     }, { timestamps: true })
 )

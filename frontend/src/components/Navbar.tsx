@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-import { Sun, Moon, LogIn, LogOut } from "lucide-react";
+import { Sun, Moon, LogIn, LogOut, MessageCircleDashed } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
@@ -8,7 +8,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { user, loading, logout } = useAuth();
 
-  // 1) Theme init
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
     const isDark =
@@ -18,7 +17,6 @@ const Navbar = () => {
     setDark(isDark);
   }, []);
 
-  // 2) Apply dark class
   useEffect(() => {
     const root = document.documentElement;
     if (dark) {
@@ -43,6 +41,8 @@ const Navbar = () => {
     }
   };
 
+  
+
   const isLoggedIn = !!user;
 
   return (
@@ -50,12 +50,13 @@ const Navbar = () => {
       <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
         <NavLink
           to="/"
-          className="text-lg font-bold text-gray-900 dark:text-white"
+          className="logo text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2"
         >
-          AuthApp
+          <MessageCircleDashed />
+          Chattr 
         </NavLink>
 
-        <div className="flex items-center gap-3">
+        <div className="navitems flex items-center gap-3">
           {/* Dark mode toggle */}
           <button
             type="button"
