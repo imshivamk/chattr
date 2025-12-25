@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { Sun, Moon, LogIn, LogOut, MessageCircleDashed } from "lucide-react";
-import { useAuth } from "../context/AuthContext";
+import { useAuthStore } from "../store/useAuthStore";
 
 const Navbar = () => {
   const [dark, setDark] = useState(false);
   const navigate = useNavigate();
-  const { user, loading, logout } = useAuth();
+  const { user, loading, logout } = useAuthStore();
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");

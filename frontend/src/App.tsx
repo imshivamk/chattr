@@ -1,40 +1,24 @@
-// App.tsx
-import { Route, Routes } from "react-router-dom";
-import HomePage from "./pages/HomePage.tsx";
-import ResetPasswordPage from "./pages/ResetPassword.tsx";
-import SignupPage from "./pages/SignupPage.tsx";
-import LoginPage from "./pages/LoginPage.tsx";
-import ForgotPasswordPage from "./pages/ForgotPasswordPage.tsx";
-import Navbar from "./components/Navbar";
-import VerifyEmailPage from "./pages/VerifyEmailPage.tsx";
-
-import { AuthProvider } from "./context/AuthContext";
-import ProtectedRoute from "./components/ProtectedRoute";
-import DashboardPage from "./pages/DashboardPage";
+import { useEffect } from "react";
+import DecoratorBg from "./components/DecoratorBg";
+import Routes from "./Routes";
+import { useAuthStore } from "./store/useAuthStore";
 
 const App = () => {
+
+  const authenticate = useAuthStore((state) => state.authenticate);
+  useEffect(()=>{authenticate()}, [])
+
   return (
-    <AuthProvider>
-      <div className="MainContainer min-h-screen flex flex-col">
-        <Navbar />
-        <Routes>
-          <Route path="/reset-password/:resetPasswordCode" element={<ResetPasswordPage />} />
-          <Route path="/" element={<HomePage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/verify-email/:email" element={<VerifyEmailPage />} />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <DashboardPage />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
+      <div className="min-h-screen flex flex-col bg-gray-900 relative overflow-hidden">
+        {/* Decorators */}
+        <DecoratorBg/>
+
+        {/* my app content */}
+        <div className="app-content relative z-10 grow">
+          <Routes />
+        </div>
+
       </div>
-    </AuthProvider>
   );
 };
 
