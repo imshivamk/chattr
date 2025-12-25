@@ -55,7 +55,7 @@ const VerifyEmailPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-950 flex items-center justify-center p-6">
+    <div className="min-h-screen  flex items-center justify-center p-6">
       <div className="w-full max-w-md bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 text-center">
           Verify your email

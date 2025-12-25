@@ -1,12 +1,12 @@
 import React from 'react'
-import { useAuth } from '../context/AuthContext'
 import { Navigate } from 'react-router-dom';
+import { useAuthStore } from '../store/useAuthStore';
 
 interface Props{
     children: React.JSX.Element
 }
 const ProtectedRoute = ({children}:Props) => {
-    const {user, loading} = useAuth();
+    const {user, loading} = useAuthStore();
     if(loading){
         return (
             <div className="loading">
