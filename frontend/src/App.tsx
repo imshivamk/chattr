@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import DecoratorBg from "./components/DecoratorBg";
 import Routes from "./Routes";
 import { useAuthStore } from "./store/useAuthStore";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
 
@@ -17,6 +18,8 @@ const App = () => {
         <div className="app-content relative z-10 grow">
           <Routes />
         </div>
+
+        <Toaster position="top-right" />
 
       </div>
   );

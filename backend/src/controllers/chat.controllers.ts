@@ -3,6 +3,7 @@ import { IAuthRequest } from "../types/types.js"
 import User from "../models/User.js";
 import cloudinary from "../lib/cloudinary.js";
 import Message from "../models/Message.js";
+import { getReceiverSocketId, io } from "../lib/socket.js";
 
 
 
@@ -25,17 +26,18 @@ export const getAllContacts = async (req: IAuthRequest, res: Response) => {
 export const GetMessagesByUserId = async (req: IAuthRequest, res: Response) => {
     try {
         const myId = req.userId;
-        const friendId = req.params.id;
+        const partnerId = req.params.id;
 
         const messages = await Message.find(
             {
                 $or: [
-                    { senderId: myId, receiverId: friendId },
-                    { senderId: friendId, receiverId: myId }
+                    { senderId: myId, receiverId: partnerId },
+                    { senderId: partnerId, receiverId: myId }
                 ]
             }
         )
-
+        .sort({ createdAt: 1 });
+        
         res.status(200).json({
             messages
         })
@@ -67,10 +69,12 @@ export const sendMessage = async (req: IAuthRequest, res: Response) => {
 
         let imageUrl: string | undefined;
         if (image) {
+            console.log("Image found! step 1");
             const uploadResponse = await cloudinary.uploader.upload(image); // supports base64/Data URI uploads.[web:6][web:9]
+            console.log("step 2", uploadResponse);
             imageUrl = uploadResponse.secure_url;
         }
-
+        
         const newMessage = new Message({
             senderId,
             receiverId,
@@ -80,16 +84,30 @@ export const sendMessage = async (req: IAuthRequest, res: Response) => {
 
         const savedMessage = await newMessage.save();
 
+        const receiverSocketId = getReceiverSocketId(receiverId);
+        console.log("Attempting to send message to receiver:", receiverId);
+        console.log("Receiver socket ID:", receiverSocketId);
+        
+        if(receiverSocketId) 
+        {
+            console.log("Emitting newMessage event to socket:", receiverSocketId);
+            io.to(receiverSocketId).emit("newMessage", newMessage);
+            console.log("Message emitted successfully");
+        } else {
+            console.log("Receiver not online, socket ID not found");
+        }
+
+
         return res.status(201).json({
             message: "Message sent successfully.",
-            data: savedMessage,
+            savedMessage
         });
+
     } catch (error) {
         console.error("Error in sendMessage:", error);
         return res.status(500).json({ message: "Internal server error" });
     }
 };
-
 
 export const getChats = async (req: IAuthRequest, res: Response) => {
 
@@ -131,3 +149,22 @@ export const getChats = async (req: IAuthRequest, res: Response) => {
 
 }
 
+export const getChatPartnerById = async (req: IAuthRequest, res: Response) => {
+    try {
+        const partnerId = req.params.id;
+
+        const user = await User.findById(partnerId).select('-password -verificationCode -resetPasswordCode');
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        res.status(200).json({
+            user
+        });
+
+    } catch (error) {
+        console.error("Error in getChatPartnerById:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}

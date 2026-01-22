@@ -19,7 +19,7 @@ const LoginPage: React.FC = () => {
     try {
       await login(email, password);      // context -> axios POST /auth/login (with cookies)
       setMessage("Logged in successfully.");
-      navigate("/dashboard");           // or "/"
+      navigate("/chat");           // or "/"
     } catch (err: any) {
       const msg =
         err?.response?.data?.message ||
