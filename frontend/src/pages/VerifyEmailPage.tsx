@@ -44,7 +44,7 @@ const VerifyEmailPage: React.FC = () => {
 
       setMessage(data.message || "Email verified successfully. You can now log in.");
       setOtp("");
-      navigate("/login");
+      navigate("/");
       
     } catch (err) {
       console.error("Error verifying email:", err);

@@ -8,7 +8,7 @@ interface Props{
 const ProtectedRoute = ({children}:Props) => {
     const {user, loading} = useAuthStore();
     if(loading){
-        return (
+        return (    
             <div className="loading">
                 Loading...
             </div>
